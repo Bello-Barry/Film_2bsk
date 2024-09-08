@@ -175,34 +175,25 @@
         <p>Nous espérons que vous apprécierez votre expérience sur notre site !</p>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
     <script>
+        // Configuration de Firebase
+        const firebaseConfig = {
+            apiKey: "VOTRE_API_KEY",
+            authDomain: "VOTRE_AUTH_DOMAIN",
+            projectId: "VOTRE_PROJECT_ID",
+            storageBucket: "VOTRE_STORAGE_BUCKET",
+            messagingSenderId: "VOTRE_MESSAGING_SENDER_ID",
+            appId: "VOTRE_APP_ID"
+        };
+
+        // Initialiser Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         // Liste initiale de films
-        let movies = [
-            {
-                title: "World Soccer Championship",
-                category: "Sport",
-                link: "https://youtu.be/4rVuB03DifU?si=36kNAOFxcCTkWL6G",
-                description: "Highlights des meilleurs moments du Championnat du Monde de Football."
-            },
-            {
-                title: "La La Land",
-                category: "Comédie musicale",
-                link: "https://www.youtube.com/watch?v=0pdqf4P9MB8",
-                description: "Dans le Los Angeles d'aujourd'hui, une histoire d'amour entre une actrice en devenir et un pianiste de jazz."
-            },
-            {
-                title: "Inception",
-                category: "Science-fiction",
-                link: "https://www.youtube.com/watch?v=YoHD9XEInc0",
-                description: "Dom Cobb est un voleur expérimenté, le meilleur dans l'art dangereux de l'extraction, voler les secrets les plus intimes enfouis au plus profond du subconscient."
-            },
-            {
-                title: "Le Parrain",
-                category: "Drame",
-                link: "https://www.youtube.com/watch?v=sY1S34973zA",
-                description: "En 1945, à New York, les Corleone sont une des cinq familles de la mafia. Don Vito Corleone marie sa fille à un bookmaker."
-            }
-        ];
+        let movies = [];
 
         // Fonction pour ajouter un film
         function addMovie(title, category, link, description) {
@@ -210,11 +201,19 @@
                 showMessage("Lien YouTube invalide");
                 return;
             }
-            movies.push({title, category, link, description});
-            displayMovies();
-            updateCategories();
-            showMessage("Film ajouté avec succès!");
-            navigateTo('home');
+            const movie = { title, category, link, description };
+            db.collection("movies").add(movie) // Ajouter le film à Firestore
+                .then(() => {
+                    movies.push(movie);
+                    displayMovies();
+                    updateCategories();
+                    showMessage("Film ajouté avec succès!");
+                    navigateTo('home');
+                })
+                .catch(error => {
+                    console.error("Erreur lors de l'ajout du film: ", error);
+                    showMessage("Erreur lors de l'ajout du film.");
+                });
         }
 
         // Fonction pour afficher les films
@@ -279,6 +278,18 @@
             document.getElementById(pageId).style.display = 'block';
         }
 
+        // Fonction pour charger les films depuis Firestore
+        function loadMovies() {
+            db.collection("movies").get().then(querySnapshot => {
+                movies = [];
+                querySnapshot.forEach(doc => {
+                    movies.push({ id: doc.id, ...doc.data() });
+                });
+                displayMovies();
+                updateCategories();
+            });
+        }
+
         // Gestion du formulaire d'ajout de film
         document.getElementById('add-movie-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -299,8 +310,7 @@
         });
 
         // Initialisation
-        displayMovies();
-        updateCategories();
+        loadMovies();
     </script>
 </body>
-                  </html>
+</html>
