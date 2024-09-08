@@ -4,28 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Un site où vous pouvez consulter et ajouter des films hébergés sur YouTube.">
-    <title>Mon Site de Films</title>
+    <title>Ciné Critique</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
             background-color: #1a1a1a;
-            color: #f2f2f2;
+            color: #e0e0e0;
         }
         .container {
-            width: 80%;
+            width: 90%;
+            max-width: 1200px;
             margin: auto;
             overflow: hidden;
             padding: 20px;
         }
         header {
-            background: #333;
+            background: #2c3e50;
             color: white;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #e8491d 3px solid;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         header a {
             color: #ffffff;
@@ -36,58 +36,77 @@
         header ul {
             padding: 0;
             list-style: none;
+            display: flex;
+            justify-content: space-around;
         }
         header li {
-            display: inline;
-            padding: 0 20px 0 20px;
+            padding: 0 15px;
         }
         header #branding {
-            float: left;
+            text-align: center;
+            margin-bottom: 10px;
         }
         header #branding h1 {
             margin: 0;
+            font-size: 2rem;
         }
-        header nav {
-            float: right;
-            margin-top: 10px;
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
         }
         .movie {
-            background: #333;
+            background: #2c3e50;
             padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .movie:hover {
+            transform: translateY(-5px);
         }
         .movie h3 {
             margin-top: 0;
-            color: #e8491d;
+            color: #ecf0f1;
         }
         .movie .category {
             font-style: italic;
-            color: #ccc;
+            color: #bdc3c7;
+        }
+        .movie iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 4px;
+            margin-bottom: 10px;
         }
         form {
-            background: #333;
+            background: #34495e;
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         form input[type="text"], form textarea, form select {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #555;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #7f8c8d;
             border-radius: 4px;
-            background-color: #1a1a1a;
-            color: #f2f2f2;
+            background-color: #2c3e50;
+            color: #ecf0f1;
         }
         form input[type="submit"], .button {
-            background: #e8491d;
+            background: #e74c3c;
             color: #fff;
             padding: 10px 15px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form input[type="submit"]:hover, .button:hover {
+            background: #c0392b;
         }
         .button {
             display: inline-block;
@@ -97,7 +116,7 @@
         #message {
             padding: 10px;
             margin-top: 10px;
-            background-color: #4CAF50;
+            background-color: #27ae60;
             color: white;
             display: none;
             border-radius: 4px;
@@ -109,15 +128,16 @@
             margin-bottom: 20px;
         }
         .category-button {
-            background: #333;
+            background: #34495e;
             color: white;
             border: none;
             padding: 5px 10px;
             border-radius: 3px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         .category-button.active {
-            background: #e8491d;
+            background: #e74c3c;
         }
     </style>
 </head>
@@ -125,7 +145,7 @@
     <header>
         <div class="container">
             <div id="branding">
-                <h1>Mon Site de Films</h1>
+                <h1>Ciné Critique</h1>
             </div>
             <nav>
                 <ul>
@@ -139,8 +159,8 @@
     </header>
 
     <div class="container" id="home">
-        <h2>Mes Films</h2>
-        <div id="movie-list">
+        <h2>Catalogue de Films</h2>
+        <div id="movie-list" class="movie-grid">
             <!-- Les films seront ajoutés ici dynamiquement -->
         </div>
     </div>
@@ -150,7 +170,7 @@
         <div id="category-list">
             <!-- Les catégories seront ajoutées ici dynamiquement -->
         </div>
-        <div id="category-movies">
+        <div id="category-movies" class="movie-grid">
             <!-- Les films de la catégorie sélectionnée seront affichés ici -->
         </div>
     </div>
@@ -169,7 +189,7 @@
 
     <div class="container" id="about" style="display: none;">
         <h2>À propos</h2>
-        <p>Bienvenue sur Mon Site de Films, une plateforme où vous pouvez découvrir et partager vos films préférés hébergés sur YouTube. Notre site vous permet de :</p>
+        <p>Bienvenue sur Ciné Critique, une plateforme où vous pouvez découvrir et partager vos films préférés hébergés sur YouTube. Notre site vous permet de :</p>
         <ul>
             <li>Consulter une variété de films dans différentes catégories</li>
             <li>Ajouter vos propres films à notre collection</li>
@@ -178,46 +198,46 @@
         <p>Nous espérons que vous apprécierez votre expérience sur notre site !</p>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script>
-        // Configuration de Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyD7vSOFUgNIwp_337eBt1BZrbAOW7Bl6DU",
-            authDomain: "film-513d1.firebaseapp.com",
-            projectId: "film-513d1",
-            storageBucket: "film-513d1.appspot.com",
-            messagingSenderId: "991263559680",
-            appId: "1:991263559680:web:be86a9d5297502e7b588e5",
-            measurementId: "G-S15XTY58SW"
-        };
-
-        // Initialiser Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
         // Liste initiale de films
-        let movies = [];
+        let movies = [
+            {
+                title: "World Soccer Championship",
+                category: "Sport",
+                link: "https://youtu.be/4rVuB03DifU?si=36kNAOFxcCTkWL6G",
+                description: "Highlights des meilleurs moments du Championnat du Monde de Football."
+            },
+            {
+                title: "La La Land",
+                category: "Comédie musicale",
+                link: "https://www.youtube.com/watch?v=0pdqf4P9MB8",
+                description: "Dans le Los Angeles d'aujourd'hui, une histoire d'amour entre une actrice en devenir et un pianiste de jazz."
+            },
+            {
+                title: "Inception",
+                category: "Science-fiction",
+                link: "https://www.youtube.com/watch?v=YoHD9XEInc0",
+                description: "Dom Cobb est un voleur expérimenté, le meilleur dans l'art dangereux de l'extraction, voler les secrets les plus intimes enfouis au plus profond du subconscient."
+            },
+            {
+                title: "Le Parrain",
+                category: "Drame",
+                link: "https://www.youtube.com/watch?v=sY1S34973zA",
+                description: "En 1945, à New York, les Corleone sont une des cinq familles de la mafia. Don Vito Corleone marie sa fille à un bookmaker."
+            }
+        ];
 
         // Fonction pour ajouter un film
         function addMovie(title, category, link, description) {
             if (!getYouTubeId(link)) {
-                showMessage("Lien YouTube invalide");
+                showMessage("Lien YouTube invalide", "error");
                 return;
             }
-            const movie = { title, category, link, description };
-            db.collection("movies").add(movie)
-                .then(() => {
-                    movies.push(movie);
-                    displayMovies();
-                    updateCategories();
-                    showMessage("Film ajouté avec succès!");
-                    navigateTo('home');
-                })
-                .catch(error => {
-                    console.error("Erreur lors de l'ajout du film: ", error);
-                    showMessage("Erreur lors de l'ajout du film.");
-                });
+            movies.push({title, category, link, description});
+            displayMovies();
+            updateCategories();
+            showMessage("Film ajouté avec succès!");
+            navigateTo('home');
         }
 
         // Fonction pour afficher les films
@@ -231,7 +251,7 @@
                     movieElement.innerHTML = `
                         <h3>${movie.title}</h3>
                         <p class="category">Catégorie: ${movie.category}</p>
-                        <iframe sandbox="allow-scripts allow-same-origin" width="100%" height="315" src="https://www.youtube.com/embed/${getYouTubeId(movie.link)}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <iframe sandbox="allow-scripts allow-same-origin" width="100%" height="200" src="https://www.youtube.com/embed/${getYouTubeId(movie.link)}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         <p>${movie.description}</p>
                     `;
                     movieList.appendChild(movieElement);
@@ -265,10 +285,11 @@
         }
 
         // Fonction pour afficher un message
-        function showMessage(msg) {
+        function showMessage(msg, type = "success") {
             const messageDiv = document.getElementById('message');
             messageDiv.textContent = msg;
             messageDiv.style.display = 'block';
+            messageDiv.style.backgroundColor = type === "success" ? "#27ae60" : "#c0392b";
             setTimeout(() => {
                 messageDiv.style.display = 'none';
             }, 3000);
@@ -280,18 +301,6 @@
                 container.style.display = 'none';
             });
             document.getElementById(pageId).style.display = 'block';
-        }
-
-        // Fonction pour charger les films depuis Firestore
-        function loadMovies() {
-            db.collection("movies").get().then(querySnapshot => {
-                movies = [];
-                querySnapshot.forEach(doc => {
-                    movies.push({ id: doc.id, ...doc.data() });
-                });
-                displayMovies();
-                updateCategories();
-            });
         }
 
         // Gestion du formulaire d'ajout de film
@@ -314,7 +323,8 @@
         });
 
         // Initialisation
-        loadMovies();
+        displayMovies();
+        updateCategories();
     </script>
 </body>
 </html>
