@@ -11,7 +11,8 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #1a1a1a;
+            color: #f2f2f2;
         }
         .container {
             width: 80%;
@@ -20,7 +21,7 @@
             padding: 20px;
         }
         header {
-            background: #35424a;
+            background: #333;
             color: white;
             padding-top: 30px;
             min-height: 70px;
@@ -51,7 +52,7 @@
             margin-top: 10px;
         }
         .movie {
-            background: #fff;
+            background: #333;
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 5px;
@@ -59,14 +60,14 @@
         }
         .movie h3 {
             margin-top: 0;
-            color: #35424a;
+            color: #e8491d;
         }
         .movie .category {
             font-style: italic;
-            color: #777;
+            color: #ccc;
         }
         form {
-            background: #fff;
+            background: #333;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -75,8 +76,10 @@
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #555;
             border-radius: 4px;
+            background-color: #1a1a1a;
+            color: #f2f2f2;
         }
         form input[type="submit"], .button {
             background: #e8491d;
@@ -106,7 +109,7 @@
             margin-bottom: 20px;
         }
         .category-button {
-            background: #35424a;
+            background: #333;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -175,25 +178,22 @@
         <p>Nous espérons que vous apprécierez votre expérience sur notre site !</p>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script>
         // Configuration de Firebase
         const firebaseConfig = {
-    apiKey: "AIzaSyD7vSOFUgNIwp_337eBt1BZrbAOW7Bl6DU",
-    authDomain: "film-513d1.firebaseapp.com",
-    projectId: "film-513d1",
-    storageBucket: "film-513d1.appspot.com",
-    messagingSenderId: "991263559680",
-    appId: "1:991263559680:web:be86a9d5297502e7b588e5",
-    measurementId: "G-S15XTY58SW"
-  };
+            apiKey: "AIzaSyD7vSOFUgNIwp_337eBt1BZrbAOW7Bl6DU",
+            authDomain: "film-513d1.firebaseapp.com",
+            projectId: "film-513d1",
+            storageBucket: "film-513d1.appspot.com",
+            messagingSenderId: "991263559680",
+            appId: "1:991263559680:web:be86a9d5297502e7b588e5",
+            measurementId: "G-S15XTY58SW"
+        };
 
-  // Initialize Firebase
-  //const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
         // Initialiser Firebase
-        const app = firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
         // Liste initiale de films
@@ -206,7 +206,7 @@
                 return;
             }
             const movie = { title, category, link, description };
-            db.collection("movies").add(movie) // Ajouter le film à Firestore
+            db.collection("movies").add(movie)
                 .then(() => {
                     movies.push(movie);
                     displayMovies();
