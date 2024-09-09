@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un film - Ciné Critique</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1>Ciné Critique</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="catalogue.html">Catalogue</a></li>
+                    <li><a href="add-movie.html">Ajouter un film</a></li>
+                    <li><a href="about.html">À propos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" id="add-movie">
+        <h2>Ajouter un nouveau film</h2>
+        <form id="add-movie-form">
+            <input type="text" id="movie-title" aria-label="Titre du film" placeholder="Titre du film" required>
+            <input type="text" id="movie-category" aria-label="Catégorie du film" placeholder="Catégorie du film" required>
+            <input type="text" id="movie-link" aria-label="Lien YouTube" placeholder="Lien YouTube" required>
+            <textarea id="movie-description" aria-label="Description du film" placeholder="Description du film" required></textarea>
+            <input type="submit" value="Ajouter le film">
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
