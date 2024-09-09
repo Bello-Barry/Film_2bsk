@@ -1,8 +1,8 @@
-// Importer les fonctions Firebase nécessaires
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-// Configuration Firebase
+// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAWZg09J3DF8-vYjUEMOo_kDANNDwqzWGw",
     authDomain: "film2bsk.firebaseapp.com",
@@ -13,7 +13,7 @@ const firebaseConfig = {
     measurementId: "G-SMW65VQX9G"
 };
 
-// Initialisation Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -60,7 +60,6 @@ async function fetchMovies() {
 function displayMovies(category = null) {
     const movieList = document.getElementById(category ? 'category-movies' : 'movie-list');
     movieList.innerHTML = '';
-
     movies.forEach(movie => {
         if (!category || movie.category === category) {
             const movieElement = document.createElement('div');
@@ -68,9 +67,7 @@ function displayMovies(category = null) {
             movieElement.innerHTML = `
                 <h3>${movie.title}</h3>
                 <p class="category">Catégorie: ${movie.category}</p>
-                <iframe sandbox="allow-scripts allow-same-origin" width="100%" height="200" 
-                    src="https://www.youtube.com/embed/${getYouTubeId(movie.link)}" 
-                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe sandbox="allow-scripts allow-same-origin" width="100%" height="200" src="https://www.youtube.com/embed/${getYouTubeId(movie.link)}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <p>${movie.description}</p>
             `;
             movieList.appendChild(movieElement);
@@ -83,7 +80,6 @@ function updateCategories() {
     const categoryList = document.getElementById('category-list');
     const categories = [...new Set(movies.map(movie => movie.category))];
     categoryList.innerHTML = '';
-
     categories.forEach(category => {
         const button = document.createElement('button');
         button.className = 'category-button';
@@ -134,7 +130,7 @@ document.getElementById('add-movie-form').addEventListener('submit', function(e)
     this.reset();
 });
 
-// Navigation entre les pages
+// Navigation
 document.querySelectorAll('header a').forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
