@@ -141,26 +141,25 @@
         }
     </style>
     <script type="module">
-        // Importer les fonctions nécessaires de Firebase
+        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-        // Configuration de Firebase
+        // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyD7vSOFUgNIwp_337eBt1BZrbAOW7Bl6DU",
-            authDomain: "film-513d1.firebaseapp.com",
-            projectId: "film-513d1",
-            storageBucket: "film-513d1.appspot.com",
-            messagingSenderId: "991263559680",
-            appId: "1:991263559680:web:be86a9d5297502e7b588e5",
-            measurementId: "G-S15XTY58SW"
+            apiKey: "AIzaSyAWZg09J3DF8-vYjUEMOo_kDANNDwqzWGw",
+            authDomain: "film2bsk.firebaseapp.com",
+            projectId: "film2bsk",
+            storageBucket: "film2bsk.appspot.com",
+            messagingSenderId: "738505652788",
+            appId: "1:738505652788:web:181e77e3ec21167274a861",
+            measurementId: "G-SMW65VQX9G"
         };
 
-        // Initialiser Firebase
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Liste initiale de films
         let movies = [];
 
         // Fonction pour ajouter un film
@@ -169,35 +168,34 @@
                 showMessage("Lien YouTube invalide", "error");
                 return;
             }
-            
             try {
-                await addDoc(collection(db, "movies"), {
-                    title: title,
-                    category: category,
-                    link: link,
-                    description: description
+                await addDoc(collection(db, "films"), {
+                    title,
+                    category,
+                    link,
+                    description
                 });
                 movies.push({ title, category, link, description });
                 displayMovies();
                 updateCategories();
                 showMessage("Film ajouté avec succès!");
                 navigateTo('home');
-            } catch (e) {
-                console.error("Erreur lors de l'ajout du film : ", e);
-                showMessage("Erreur lors de l'ajout du film", "error");
+            } catch (error) {
+                showMessage("Une erreur s'est produite lors de l'ajout du film", "error");
+                console.error("Erreur lors de l'ajout du film :", error);
             }
         }
 
         // Fonction pour récupérer les films depuis Firestore
         async function fetchMovies() {
-            const querySnapshot = await getDocs(collection(db, "movies"));
-            movies = [];
-            querySnapshot.forEach((doc) => {
-                const movieData = doc.data();
-                movies.push(movieData);
-            });
-            displayMovies();
-            updateCategories();
+            try {
+                const snapshot = await getDocs(collection(db, "films"));
+                movies = snapshot.docs.map(doc => doc.data());
+                displayMovies();
+                updateCategories();
+            } catch (error) {
+                console.error("Erreur lors de la récupération des films :", error);
+            }
         }
 
         // Fonction pour afficher les films
@@ -343,4 +341,4 @@
         <p>Nous espérons que vous apprécierez votre expérience sur notre site !</p>
     </div>
 </body>
-              </html>
+</html>
