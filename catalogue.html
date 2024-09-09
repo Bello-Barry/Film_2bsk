@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalogue - Ciné Critique</title>
+    <title>Catégories - Ciné Critique</title>
     <link rel="stylesheet" href="style.css">
+    <script src="App.js" type="module" defer></script>
 </head>
 <body>
     <header>
@@ -15,7 +16,7 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="catalogue.html">Catalogue</a></li>
+                    <li><a href="catalogue.html">Catégories</a></li>
                     <li><a href="add-movie.html">Ajouter un film</a></li>
                     <li><a href="about.html">À propos</a></li>
                 </ul>
@@ -23,16 +24,14 @@
         </div>
     </header>
 
-    <div class="container" id="catalogue">
-        <h2>Catalogue de Films</h2>
+    <div class="container" id="categories">
+        <h2>Catégories</h2>
         <div id="category-list">
             <!-- Les catégories seront ajoutées ici dynamiquement -->
         </div>
-        <div id="movie-list" class="movie-grid">
-            <!-- Les films seront ajoutés ici dynamiquement -->
+        <div id="category-movies" class="movie-grid">
+            <!-- Les films de la catégorie sélectionnée seront affichés ici -->
         </div>
     </div>
-
-    <script type="module" src="app.js"></script>
 </body>
-</html>
+</html> 
