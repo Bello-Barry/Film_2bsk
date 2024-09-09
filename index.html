@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Un site où vous pouvez consulter et ajouter des films hébergés sur YouTube.">
     <title>Ciné Critique</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
@@ -16,23 +16,37 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="catalogue.html">Catalogue</a></li>
-                    <li><a href="add-movie.html">Ajouter un film</a></li>
                     <li><a href="about.html">À propos</a></li>
+                    <li><a href="#categories">Catégories</a></li>
+                    <li><a href="#add-movie">Ajouter un film</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <div class="container" id="home">
-        <h2>Bienvenue sur Ciné Critique !</h2>
-        <p>Découvrez et partagez vos films préférés hébergés sur YouTube.</p>
-        <div class="button-container">
-            <a href="catalogue.html" class="button">Voir le catalogue</a>
-            <a href="add-movie.html" class="button">Ajouter un film</a>
-        </div>
+        <h2>Catalogue de Films</h2>
+        <div id="movie-list" class="movie-grid"></div>
     </div>
 
-    <script type="module" src="app.js"></script>
+    <div class="container" id="categories" style="display: none;">
+        <h2>Catégories</h2>
+        <div id="category-list"></div>
+        <div id="category-movies" class="movie-grid"></div>
+    </div>
+
+    <div class="container" id="add-movie" style="display: none;">
+        <h2>Ajouter un nouveau film</h2>
+        <form id="add-movie-form">
+            <input type="text" id="movie-title" placeholder="Titre du film" required>
+            <input type="text" id="movie-category" placeholder="Catégorie du film" required>
+            <input type="text" id="movie-link" placeholder="Lien YouTube du film" required>
+            <textarea id="movie-description" placeholder="Description du film" required></textarea>
+            <input type="submit" value="Ajouter le film">
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>
